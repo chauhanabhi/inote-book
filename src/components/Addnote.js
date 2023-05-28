@@ -19,19 +19,19 @@ const [note, setNote] = useState({titlt:"",description:"",tag:"default"});
     <div className="container">
      <h1>Add a Note</h1>
      <form>
-  <div class="mb-3">
-    <label htmlfor="title" class="form-label">Title</label>
-    <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" onChange={onChange} />
+  <div className="mb-3">
+    <label htmlFor="title" className="form-label">Title</label>
+    <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" onChange={onChange} />
   </div>
-  <div class="mb-3">
-    <label htmlfor="description" class="form-label">Description</label>
-    <input type="text" class="form-control" id="description" name="description" onChange={onChange}/>
+  <div className="mb-3">
+    <label htmlFor="description" className="form-label">Description</label>
+    <input type="text" className="form-control" id="description" name="description" onChange={onChange}/>
   </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1" onChange={onChange} />
-    <label class="form-check-label" htmlfor="exampleCheck1">Check me out</label>
+  <div className="mb-3">
+  <label className="form-label" htmlFor="exampleCheck1">Tag</label>
+    <input type="text" className="form-control" id="tag" name="tag" onChange={onChange} />
   </div>
-  <button type="submit" class="btn btn-primary" onClick={handleClick}>Submit</button>
+  <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
 </form>
     </div>
     </>
