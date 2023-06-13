@@ -1,39 +1,45 @@
-import React, { useContext, useState } from 'react'
-import noteContext from '../context/notes/noteContext';
-const Addnote = () => {
- const context = useContext(noteContext);
- const {addNote} = context;
+import React  from 'react'
+import { useState } from 'react'
+import { addNote } from '../controller';
 
-const [note, setNote] = useState({titlt:"",description:"",tag:"default"});
+const Addnote = (state) => {
 
- const handleClick = (e) =>{
+  const [newPost, setNewPost] = useState({title: "",description:"", tag:""});
+
+  const changeHadler = (e) => {   
+    setNewPost({...newPost, [e.target.name]: e.target.value});
+  }
+  const addPosts = async (e) => {
     e.preventDefault();
-    addNote(note.title,note.description,note.tag);
- }
- 
- const onChange = (e) =>{
-    setNote({...note, [e.target.name] : e.target.value})
- }
+    const result = await addNote(newPost);
+   
+    if(result === 200){
+      setNewPost({title: "",description:"", tag:""});
+      state.newAdded()
+      alert('added');     
+    }
+  }
+
   return (
     <>
-    <div className="container">
-     <h1>Add a Note</h1>
-     <form>
-  <div className="mb-3">
-    <label htmlFor="title" className="form-label">Title</label>
-    <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" onChange={onChange} />
-  </div>
-  <div className="mb-3">
-    <label htmlFor="description" className="form-label">Description</label>
-    <input type="text" className="form-control" id="description" name="description" onChange={onChange}/>
-  </div>
-  <div className="mb-3">
-  <label className="form-label" htmlFor="exampleCheck1">Tag</label>
-    <input type="text" className="form-control" id="tag" name="tag" onChange={onChange} />
-  </div>
-  <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
-</form>
-    </div>
+      <div className="container">
+        <h1>Add a Note</h1>
+        <form>
+          <div className="mb-3">
+            <label htmlFor="title" className="form-label">Title</label>
+            <input type="text" className="form-control" id="title" name="title"  onChange={changeHadler} minLength={5} required value={newPost.title}  aria-describedby="emailHelp" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">Description</label>
+            <input type="text" className="form-control" id="description"  onChange={changeHadler} minLength={5} required value={newPost.description}  name="description" />
+          </div>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="exampleCheck1" >Tag</label>
+            <input type="text" className="form-control" id="tag" onChange={changeHadler} minLength={5} required value={newPost.tag}  name="tag" />
+          </div>
+          <button type="submit" disabled={newPost.title.length<5|| newPost.description.length< 5} className="btn btn-primary" onClick={addPosts} >Submit</button>
+        </form>
+      </div>
     </>
   )
 }

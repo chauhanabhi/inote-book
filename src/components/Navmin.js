@@ -1,24 +1,24 @@
 import React,{useEffect} from 'react'
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useLocation} from 'react-router-dom';
+import { useLocation,Link,useNavigate} from 'react-router-dom';
 
 const Navmin = () => {
+  const history = useNavigate();
   //for active nav
-
+const logoutHandel = () =>{
+  localStorage.removeItem('token');
+  history("/");
+}
   let location = useLocation();
-  useEffect(() => {
-    //console.log(location.pathname);
-  }, [location]);
+
   return (
     <>
     <Navbar bg="light" expand="lg">
       <Container >
-        <Navbar.Brand href="/">iNotebook</Navbar.Brand>
+        <Navbar.Brand href="/home">iNotebook</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -42,15 +42,9 @@ const Navmin = () => {
               Link
             </Nav.Link>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+          {!localStorage.getItem("token")?<div><Link to="/" className="btn btn-primary mx-1 p-2">Login</Link>
+          <Link to="/signup" className="btn btn-primary mx-1 p-2">Signup</Link></div>:
+          <button onClick={logoutHandel} type='button'className="btn btn-primary mx-1 p-2">Logout</button>}
         </Navbar.Collapse>
       </Container>
     </Navbar>
